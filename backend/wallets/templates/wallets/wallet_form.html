@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}Create New Wallet{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="text-center">Create New Wallet</h2>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="{{ form.name.id_for_label }}" class="form-label">Wallet Name</label>
+                            {{ form.name }}
+                            {% if form.name.errors %}
+                                <div class="alert alert-danger">
+                                    {{ form.name.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="mb-3">
+                            <label for="{{ form.currency.id_for_label }}" class="form-label">Currency</label>
+                            {{ form.currency }}
+                            {% if form.currency.errors %}
+                                <div class="alert alert-danger">
+                                    {{ form.currency.errors }}
+                                </div>
+                            {% endif %}
+                            <small class="form-text text-muted">
+                                {% if user.favorite_currency %}
+                                    Your favorite currency ({{ user.favorite_currency.code }}) is shown first
+                                {% endif %}
+                            </small>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Create Wallet</button>
+                            <a href="{% url 'wallets:wallet_list' %}" class="btn btn-outline-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

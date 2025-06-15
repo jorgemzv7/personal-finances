@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}My Wallets{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row mb-4">
+        <div class="col">
+            <h1 class="display-4">My Wallets</h1>
+        </div>
+        <div class="col text-end">
+            <a href="{% url 'wallets:wallet_create' %}" class="btn btn-primary">
+                <i class="fas fa-plus"></i> New Wallet
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        {% if wallets %}
+            {% for wallet in wallets %}
+                <div class="col-md-4 mb-4">
+                    <a href="{% url 'wallets:wallet_detail' wallet.id %}" class="text-decoration-none wallet-card">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title text-dark">{{ wallet.name }}</h5>
+                                <p class="card-text">
+                                    <span class="badge bg-primary">{{ wallet.currency.code }}</span>
+                                    <small class="text-muted">{{ wallet.currency.name }}</small>
+                                </p>
+                            </div>
+                            <div class="card-footer bg-transparent">
+                                <span class="text-primary">
+                                    <i class="fas fa-eye"></i> View Details
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="col">
+                <div class="alert alert-info">
+                    You don't have any wallets yet. Create your first wallet to start managing your finances!
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+.wallet-card {
+    display: block;
+    transition: transform 0.2s ease-in-out;
+}
+
+.wallet-card:hover {
+    transform: translateY(-5px);
+}
+
+.wallet-card .card {
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+.wallet-card:hover .card {
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+</style>
+{% endblock %} 
